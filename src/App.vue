@@ -1,11 +1,16 @@
 <template>
 	<div>
+		<div class="header">
+      <h2>Vue CropperJS</h2>
+      <a href="https://github.com/Agontuk/vue-cropperjs">Github</a>
+    </div>
+    <hr />
 		<input ref='input' type='file' name='image' accept='image/*' @change='setImage' />
 
 		<div class='content'>
 			<section class='cropper-area'>
 				<div class='img-cropper'>
-					<vue-cropper ref='cropper' :aspect-ratio='16 / 9' :src='imgSrc' preview='.preview' />
+					<vue-cropper ref='cropper' :aspect-ratio='16 / 9' :src='imgSrc' preview='.preview' :viewMode="0" :dragMode="'crop'" :guides="true" />
 				</div>
 				<div class='actions'>
 					<a href='#' role='button' @click.prevent='zoom(0.2)'>
@@ -78,6 +83,7 @@
   
 <script>
 import VueCropper from 'vue-cropperjs';
+import 'cropperjs/dist/cropper.css';
 
 export default {
 	components: {
@@ -94,6 +100,7 @@ export default {
 		cropImage() {
 			// get image data for post processing, e.g. upload or setting image src
 			this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
+			console.log(this.cropImg)
 		},
 		flipX() {
 			const dom = this.$refs.flipX;
@@ -126,7 +133,7 @@ export default {
 		},
 		setCropBoxData() {
 			if (!this.data) return;
-
+			console.log(this.cropImg)
 			this.$refs.cropper.setCropBoxData(JSON.parse(this.data));
 		},
 		setData() {
